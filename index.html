@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-    <div id="doc" class="wrapper">
+    <div id="doc">
         Loading...
     </div>
     <script>
@@ -43,9 +43,10 @@
             // add response to node
             html.innerHTML = xhr.responseText;
             d.innerHTML = html.getElementsByTagName('div')["contents"].innerHTML;
+            d.classList.add("wrapper");
         };
         xhr.onerror = function () {
-            document.body.id = iframe;
+            document.body.id = 'iframe';
             d.innerHTML = iframe;
         }
         xhr.send();
