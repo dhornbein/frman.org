@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Front Range Mutual Aid</title>
+    <style>
+        html { box-sizing: border-box }
+        *, *:before, *:after { box-sizing: inherit }
+        html, body, h1, h2, h3, h4, h5, h6, p, ol, ul, li, dl,
+        dt, dd, blockquote, address { margin: 0; padding: 0 }
+
+        body#iframe { overflow: hidden; }
+        .doc {
+            width: 100vw;
+            height: 100vh;
+            border: 0;
+        }
+
+        .wrapper {
+            padding: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        #header,
+        #footer { display: none; }
+    </style>
+</head>
+<body>
+    <div id="doc" class="wrapper">
+        Loading...
+    </div>
+    <script>
+        var html = document.createElement('html');
+        var iframe = '<iframe class="doc" src="https://docs.google.com/document/d/e/2PACX-1vSe3N73upSIkkevDabJA7-1tkgcg53vSrC4zjUIVcBXDmdEJp2CJSLCcsCMwYldun5YJBwMRa_Q7rRP/pub?embedded=false"></iframe>';
+        var url = 'https://docs.google.com/document/d/e/2PACX-1vSe3N73upSIkkevDabJA7-1tkgcg53vSrC4zjUIVcBXDmdEJp2CJSLCcsCMwYldun5YJBwMRa_Q7rRP/pub';
+        var d = document.getElementById('doc');
+        // CORS request
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.onload = function () {
+            // add response to node
+            html.innerHTML = xhr.responseText;
+            d.innerHTML = html.getElementsByTagName('div')["contents"].innerHTML;
+        };
+        xhr.onerror = function () {
+            document.body.id = iframe;
+            d.innerHTML = iframe;
+        }
+        xhr.send();
+    </script>
+</body>
+</html>
