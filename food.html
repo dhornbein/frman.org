@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Front Range Mutual Aid</title>
+    <meta property="og:type" content="business.business">
+    <meta property="og:title" content="Front Range Mutual Aid Network - Needs/Offers Form">
+    <meta property="og:url" content="https://frman.org/form">
+    <meta property="og:image" content="https://frman.org/graph_image.jpg">
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js'></script>
+    
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css' rel='stylesheet' />
+
+    <style>
+        html { box-sizing: border-box }
+        *, *:before, *:after { box-sizing: inherit }
+        html, body, h1, h2, h3, h4, h5, h6, p, ol, ul, li, dl,
+        dt, dd, blockquote, address { margin: 0; padding: 0 }
+
+        #map {
+            height: 50vh;
+            width: 100%;
+        }
+
+        .location {
+            padding: 15px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        h1 {
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+
+<body>
+    <div>This map was created by Drew Hornbein <a href="//dhornbein.com">visit my website to get in touch</a>. Data is being pulled from a spreadsheet but I'm not sure who is managing the data...</div>
+    <div id="main">
+        <div id='map'></div>
+        <div class="location" :id="index" v-for="(loc, index) in locations">
+            <h1>{{ loc.name }}</h1>
+            <div>
+                <div v-if="loc.status"><b>Status</b>: <span>{{ loc.status }}</span></div>
+                
+                <div v-if="loc.open"><b>Open</b>: <span>{{ loc.open }}</span></div>
+                
+                <div v-if="loc.delivery"><b>Delivery</b>: <span>{{ loc.delivery }}</span></div>
+                
+                <div v-if="loc.phone"><b>Phone</b>: <span>{{ loc.phone }}</span></div>
+                
+                <div v-if="loc.addressFull"><b>Address</b>: <span>{{ loc.addressFull }}</span></div>
+                
+                <div v-if="loc.hours"><b>Hour</b>: <span>{{ loc.hours }}</span></div>
+                
+                <div v-if="loc.services"><b>Services</b>: <span>{{ loc.services }}</span></div>
+
+            </div>
+        </div>
+    </div>
+    <script src="js/script-vue-food.js"></script>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZGhvcm5iZWluIiwiYSI6ImNrN3c4cGlxbjAxdWwzbHFobnlidmd3am0ifQ.LY9D6_L_uZxJjY7IfRRsgA';
+
+        var map = new mapboxgl.Map({
+                container: 'map', // HTML container id
+                style: 'mapbox://styles/mapbox/streets-v9', // style URL
+                center: [-104.9903, 39.7392], // starting position as [lng, lat]
+                zoom: 10
+            });
+
+        //adds controles
+        map.addControl(new mapboxgl.NavigationControl({
+            showCompass: false,
+        }));
+
+        app.locations.forEach(el => {
+            if (!el.lat) return;
+
+            var popup = new mapboxgl.Popup()
+                .setHTML('<h3>' + el.name + '</h3><p><b>Hours</b> ' + el.hours + '</p><p><b>Address:</b> ' + el.addressFull + '</p>');
+
+            var marker = new mapboxgl.Marker()
+                .setLngLat([el.lon, el.lat])
+                .setPopup(popup)
+                .addTo(map);
+        });
+    </script>
+</body>
+
+</html>
