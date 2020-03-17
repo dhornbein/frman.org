@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Front Range Mutual Aid</title>
+    <meta property="og:type" content="business.business">
+    <meta property="og:title" content="Front Range Mutual Aid Network - Meeting Notes">
+    <meta property="og:url" content="https://frman.org">
+    <meta property="og:image" content="https://frman.org/graph_image.jpg">
+    <style>
+        html { box-sizing: border-box }
+        *, *:before, *:after { box-sizing: inherit }
+        html, body, h1, h2, h3, h4, h5, h6, p, ol, ul, li, dl,
+        dt, dd, blockquote, address { margin: 0; padding: 0 }
+
+        body#iframe { overflow: hidden; }
+        .doc {
+            width: 100vw;
+            height: 100vh;
+            border: 0;
+        }
+
+        .wrapper {
+            padding: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        #header,
+        #footer { display: none; }
+    </style>
+</head>
+<body>
+    <a href="https://docs.google.com/document/d/1NPAi4Tmvl-7MQMMIu_EK3q774q3iiOuYdT4aV-LjVTU/edit">Click here to edit this document</a>
+    <div id="doc">
+        Loading...
+    </div>
+    <script>
+        var html = document.createElement('html');
+        var iframe = '<iframe class="doc" src="https://docs.google.com/document/d/1NPAi4Tmvl-7MQMMIu_EK3q774q3iiOuYdT4aV-LjVTU/pub?embedded=false"></iframe>';
+        var url = 'https://docs.google.com/document/d/1NPAi4Tmvl-7MQMMIu_EK3q774q3iiOuYdT4aV-LjVTU/pub';
+        var d = document.getElementById('doc');
+        // CORS request
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.onload = function () {
+            // add response to node
+            html.innerHTML = xhr.responseText;
+            d.innerHTML = html.getElementsByTagName('div')["contents"].innerHTML;
+            d.classList.add("wrapper");
+        };
+        xhr.onerror = function () {
+            document.body.id = 'iframe';
+            d.innerHTML = iframe;
+        }
+        xhr.send();
+    </script>
+</body>
+</html>
