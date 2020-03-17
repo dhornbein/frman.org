@@ -78,17 +78,19 @@
             showCompass: false,
         }));
 
-        app.locations.forEach(el => {
-            if (!el.lat) return;
+        window.addEventListener('load', function () {
+            app.locations.forEach(el => {
+                if (!el.lat) return;
 
-            var popup = new mapboxgl.Popup()
-                .setHTML('<h3>' + el.name + '</h3><p><b>Hours</b> ' + el.hours + '</p><p><b>Address:</b> ' + el.addressFull + '</p>');
+                var popup = new mapboxgl.Popup()
+                    .setHTML('<h3>' + el.name + '</h3><p><b>Hours</b> ' + el.hours + '</p><p><b>Address:</b> ' + el.addressFull + '</p>');
 
-            var marker = new mapboxgl.Marker()
-                .setLngLat([el.lon, el.lat])
-                .setPopup(popup)
-                .addTo(map);
-        });
+                var marker = new mapboxgl.Marker()
+                    .setLngLat([el.lon, el.lat])
+                    .setPopup(popup)
+                    .addTo(map);
+            });
+        })
     </script>
 </body>
 
